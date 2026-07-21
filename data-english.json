@@ -1,0 +1,290 @@
+{
+  "personal": {
+    "name": "Iakobi Iakobashvili",
+    "title": "Full-Stack, AI & DevOps Developer",
+    "location": "Fontaine-le-Comte, France",
+    "email": "iakobi.dev@gmail.com",
+    "phone": "+33 7 62 70 16 71",
+    "linkedin": "https://www.linkedin.com/in/iakobi-iakobashvili-b157a9230",
+    "github": "https://github.com/Iakobgi",
+    "portfolio": "https://iakobgi.github.io/portfolio/",
+    "summary": "Junior developer looking for a 12-month apprenticeship, focused on AI, DevOps and Full-Stack development.",
+    "myself": "My name is Iakobi Iakobashvili, I am 24 years old and I am a junior developer specialized in Full-Stack development, DevOps and Artificial Intelligence.",
+    "chatbotSummary": "I am a junior developer focused on full-stack applications, AI assistants, DevOps practices, and practical product delivery. I enjoy building responsive web apps, custom chatbots, and automation tools.",
+    "chatbotBio": "I am based in Fontaine-le-Comte, France, and I am passionate about full-stack development, AI, automation, and building useful digital products for real users."
+  },
+  "apprenticeship": {
+    "status": "Currently looking for a 12-month apprenticeship as a junior developer.",
+    "availability": "Available from September 2026 for an apprenticeship.",
+    "goals": "Looking for a company where I can use my skills and knowledge to contribute to real projects that the company needs, continue learning in a supportive team, and validate the third year of the bachelor in web, app development, AI and DevOps.",
+    "chatbotStatus": "Currently looking for a 12-month apprenticeship as a junior full-stack, AI or DevOps developer.",
+    "chatbotGoals": "I am looking for a company where I can contribute to real projects, grow within a supportive team, and validate the third year of my bachelor's degree while developing practical web and AI solutions."
+  },
+  "skills": {
+    "technical": [
+      "HTML/CSS",
+      "PHP",
+      "SQL",
+      "JavaScript",
+      "C++",
+      "Python",
+      "Bash",
+      "Dart",
+      "React",
+      "Node.js",
+      "Flutter",
+      "Symfony",
+      "REST APIs",
+      "Git/GitHub",
+      "Docker",
+      "JSON",
+      "UML",
+      "QT Creator",
+      "AI API Integration",
+      "OpenRouter API",
+      "Cloudflare Workers",
+      "Wrangler",
+      "Hugging Face",
+      "Google Colab",
+      "RAG Pipelines"
+    ],
+    "learning": [
+      "CI/CD",
+      "Cloud deployment",
+      "Advanced AI agents",
+      "LLM orchestration",
+      "UI/UX",
+      "AIaaS",
+      "LLM APIs"
+    ],
+    "soft": [
+      "Autonomous",
+      "Curious",
+      "Creative",
+      "Adaptable",
+      "Flexible",
+      "Versatile"
+    ]
+  },
+  "education": [
+    {
+      "degree": "Bachelor 3 - Big Data, AI & Dev",
+      "school": "IPSSI - Paris Grande École Informatique",
+      "year": "2026 - 2027",
+      "details": "Focused on application development, full-stack development, AI, DevOps, data, and project-based learning, with a strong interest in practical and professional delivery."
+    },
+    {
+      "degree": "BTS CIEL-IR",
+      "school": "LP2I - Lycée Pilote Innovant et International",
+      "year": "2023 - 2025",
+      "details": "Focused on web and software development, systems and networks, programming, cybersecurity, internships, and collaborative projects."
+    }
+  ],
+  "experience": [
+    {
+      "role": "AI Chatbot Developer",
+      "company": "Personal project",
+      "year": "Since January 2026",
+      "details": "Built a personal AI chatbot in Python using OpenRouter APIs, JSON-based personal data, a web interface, and server deployment."
+    },
+    {
+      "role": "Web Developer",
+      "company": "Rhein Development Systems GmbH (freelance via Fiverr)",
+      "year": "June 2026 - July 2026",
+      "details": "Created a modern responsive website for a client, with a professional structure and strong emphasis on user experience."
+    },
+    {
+      "role": "Web Developer",
+      "company": "Personal portfolio project",
+      "year": "February 2026 - May 2026",
+      "details": "Built a bilingual responsive portfolio in HTML, CSS and JavaScript, with an integrated personal AI assistant powered by a Cloudflare Worker backend and OpenRouter API integration."
+    },
+    {
+      "role": "IT Support Technician",
+      "company": "IH2EF",
+      "year": "October 2025 - December 2025",
+      "details": "Handled user support, troubleshooting, ticketing, Windows deployment, hardware replacement, and IT inventory management."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Portfolio Website & AI Assistant",
+      "shortDescription": "A modern responsive portfolio website with a real AI assistant backend powered by Cloudflare.",
+      "description": "A bilingual personal portfolio website created to present my profile, skills and projects in a modern, recruiter-friendly way, while also integrating a real AI assistant backed by a Cloudflare Worker and OpenRouter API. The assistant answers visitors' questions about my profile, experience and projects using structured JSON data, giving the portfolio a practical interactive layer beyond a static presentation.",
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "JSON",
+        "Cloudflare Workers",
+        "Wrangler",
+        "OpenRouter API",
+        "REST API",
+        "Responsive Design"
+      ]
+    },
+    {
+      "name": "Web Browsing Analyser",
+      "shortDescription": "A Chrome extension that analyzes browsing data, cookies and trackers.",
+      "description": "A Chrome extension designed to help users understand their browsing activity, cookies and tracking technologies with a focus on privacy awareness and browser-side analysis.",
+      "technologies": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Chrome Extension APIs"
+      ]
+    },
+    {
+      "name": "Personal Chatbot",
+      "shortDescription": "A personal chatbot project currently in progress.",
+      "description": "A personal assistant chatbot project designed to answer questions about my profile and present useful information. It uses Python, AI APIs, JSON data and a web interface for a more interactive experience.",
+      "technologies": [
+        "Python",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "OpenRouter API",
+        "JSON"
+      ]
+    },
+    {
+      "name": "RheinDevSys - Client Website",
+      "shortDescription": "A professional web solution built for a development services client.",
+      "description": "A freelance web development project completed for RheinDevSys, a company providing development services. The website showcases their services and provides a clean experience for potential clients.",
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Responsive Design"
+      ]
+    }
+  ],
+  "languages": [
+    "English",
+    "French",
+    "Georgian",
+    "Russian"
+  ],
+  "interests": [
+    "Music",
+    "AI",
+    "Programming",
+    "Gym",
+    "Science",
+    "New technologies",
+    "Cybersecurity",
+    "Travel",
+    "Cinema"
+  ],
+  "ui": {
+    "siteTitle": "Iakobi Iakobashvili | Junior Developer",
+    "logo": "My Portfolio",
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "skills": "Skills",
+      "projects": "Projects",
+      "contact": "Contact"
+    },
+    "heroBadge": "Available for apprenticeship",
+    "buttons": {
+      "downloadCV": "Download CV",
+      "exploreProjects": "Explore Projects",
+      "sourceCode": "Source Code",
+      "livePreview": "Live Preview",
+      "comingSoon": "Coming Soon"
+    },
+    "about": {
+      "eyebrow": "About",
+      "title": "Building clean digital experiences",
+      "subtitle": "A quick introduction",
+      "who": "Who I Am",
+      "looking": "What I’m Looking For",
+      "interests": "Hobbies & Interests"
+    },
+    "skills": {
+      "eyebrow": "Skills",
+      "title": "Tech stack & tools",
+      "subtitle": "Technologies I use and explore"
+    },
+    "projects": {
+      "eyebrow": "Projects",
+      "title": "Selected work",
+      "subtitle": "Browse my recent projects",
+      "seeDetails": "See details",
+      "comingSoon": "Coming soon",
+      "locked": "Locked",
+      "comingSoonTag": "Coming Soon",
+      "nextProject": "Next Project"
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Let’s connect",
+      "subtitle": "Quick ways to reach me",
+      "linkedin": "My LinkedIn"
+    },
+    "chatbot": {
+      "title": "Portfolio Assistant",
+      "welcome": "Hi! I can help you quickly learn more about Iakobi. Ask me anything about his profile, projects, skills, or apprenticeship search.",
+      "try": "Important notice:",
+      "q1": "What skills does he have?",
+      "q2": "Is he looking for an apprenticeship?",
+      "q3": "What projects did he build?",
+      "q4": "How can I contact him?",
+      "q5": "⚠️ Please note that the first response may take up to a minute to generate. Subsequent responses will be much faster. This issue will be fixed very soon. Thank you for your patience.",
+      "placeholder": "Ask a question...",
+      "loading": "My profile data is still loading. Please try again in a second.",
+      "fallback": "I do not have that exact information yet. Try asking about skills, education, projects, experience, apprenticeship, contact, GitHub, LinkedIn, or location."
+    }
+  },
+  "projectPages": [
+    {
+      "eyebrow": "Project 01",
+      "title": "Portfolio Website & AI Assistant",
+      "subtitle": "My personal portfolio project with a Cloudflare-powered AI backend",
+      "descriptionTitle": "Description",
+      "description": "This project is my personal portfolio website. I built it to present my profile, my skills, my projects and my apprenticeship search in a clean and modern way, while also integrating a real AI assistant backend on Cloudflare Workers. Visitors can ask questions about my background and the assistant responds using structured JSON portfolio data through an OpenRouter-powered API flow.",
+      "technologiesTitle": "Technologies",
+      "technologies": "HTML, CSS, JavaScript, JSON, Cloudflare Workers, Wrangler, OpenRouter API, REST API",
+      "learnedTitle": "What I learned",
+      "learned": "Responsive front-end design, structured content modeling, AI assistant backend integration, serverless deployment on Cloudflare, and practical API orchestration for a usable portfolio experience.",
+      "imageAlt": "Portfolio Website & AI Assistant"
+    },
+    {
+      "eyebrow": "Project 02",
+      "title": "Chrome Extension - Web Browsing Analyser",
+      "subtitle": "A privacy-focused browser tool",
+      "descriptionTitle": "Description",
+      "description": "This project is a Chrome extension that helps analyze web browsing activity, cookies and trackers. It is focused on privacy awareness and browser-side analysis. The project is still under development but you can access the source code on my GitHub page.",
+      "technologiesTitle": "Technologies",
+      "technologies": "JavaScript, HTML, CSS, Chrome Extension APIs",
+      "learnedTitle": "What I learned",
+      "learned": "Extension structure, browser permissions, manifest setup, privacy-related data handling and front-end interface design.",
+      "imageAlt": "Chrome Extension - Web Browsing Analyser"
+    },
+    {
+      "eyebrow": "Project 03",
+      "title": "Personal Chatbot",
+      "subtitle": "Currently in progress",
+      "descriptionTitle": "Description",
+      "description": "This is a personal chatbot project designed to answer questions based on personal data and information. The chatbot will be able to provide insights, answer queries and assist with various tasks related to the user's personal information. The goal is to create a useful tool that can present personal information and improve interaction inside a personal website or locally without internet connection. It is still in development and will be released soon.",
+      "technologiesTitle": "Planned technologies",
+      "technologies": "JavaScript, API integration, HTML, CSS, Python",
+      "learnedTitle": "Status",
+      "learned": "Coming soon. This project is still under development.",
+      "imageAlt": "Personal Chatbot"
+    },
+    {
+      "eyebrow": "Project 04",
+      "title": "RheinDevSys - Client Website",
+      "subtitle": "A professional web solution for a development services client",
+      "descriptionTitle": "Description",
+      "description": "This is a freelance project completed for a client through Fiverr. I developed a professional, modern website for RheinDevSys, a company providing development and technical services. The website showcases their services, portfolio, and provides a platform for client inquiries and engagement.",
+      "technologiesTitle": "Technologies",
+      "technologies": "HTML, CSS, JavaScript, Responsive Design",
+      "learnedTitle": "What I learned",
+      "learned": "Client communication and requirements gathering, professional web design standards, responsive layout implementation, deployment to production, and managing client expectations throughout the development process.",
+      "imageAlt": "RheinDevSys Website"
+    }
+  ]
+}
