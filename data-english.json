@@ -8,17 +8,13 @@
     "linkedin": "https://www.linkedin.com/in/iakobi-iakobashvili-b157a9230",
     "github": "https://github.com/Iakobgi",
     "portfolio": "https://iakobgi.github.io/portfolio/",
-    "summary": "Junior developer looking for a 12-month apprenticeship, focused on AI, DevOps and Full-Stack development.",
-    "myself": "My name is Iakobi Iakobashvili, I am 24 years old and I am a junior developer specialized in Full-Stack development, DevOps and Artificial Intelligence.",
-    "chatbotSummary": "I am a junior developer focused on full-stack applications, AI assistants, DevOps practices, and practical product delivery. I enjoy building responsive web apps, custom chatbots, and automation tools.",
-    "chatbotBio": "I am based in Fontaine-le-Comte, France, and I am passionate about full-stack development, AI, automation, and building useful digital products for real users."
+    "summary": "Junior developer looking for a 12-month apprenticeship starting in November 2026, focused on AI, DevOps and Full-Stack development.",
+    "myself": "My name is Iakobi Iakobashvili, I am 24 years old and I am a junior developer specialized in Full-Stack development, DevOps and Artificial Intelligence."
   },
   "apprenticeship": {
-    "status": "Currently looking for a 12-month apprenticeship as a junior developer.",
-    "availability": "Available from September 2026 for an apprenticeship.",
-    "goals": "Looking for a company where I can use my skills and knowledge to contribute to real projects that the company needs, continue learning in a supportive team, and validate the third year of the bachelor in web, app development, AI and DevOps.",
-    "chatbotStatus": "Currently looking for a 12-month apprenticeship as a junior full-stack, AI or DevOps developer.",
-    "chatbotGoals": "I am looking for a company where I can contribute to real projects, grow within a supportive team, and validate the third year of my bachelor's degree while developing practical web and AI solutions."
+    "status": "Currently looking for a 12-month apprenticeship as a junior developer starting in November 2026.",
+    "availability": "Available for the November 2026 intake",
+    "goals": "Looking for a company where I can use my skills and knowledge to contribute to real projects that the company needs, continue learning in a supportive team, and validate the third year of the bachelor in web, app development, AI and DevOps."
   },
   "skills": {
     "technical": [
@@ -31,19 +27,18 @@
       "Bash",
       "Dart",
       "React",
+      "Angular",
       "Node.js",
       "Flutter",
       "Symfony",
       "REST APIs",
       "Git/GitHub",
       "Docker",
+      "Linux",
       "JSON",
       "UML",
       "QT Creator",
       "AI API Integration",
-      "OpenRouter API",
-      "Cloudflare Workers",
-      "Wrangler",
       "Hugging Face",
       "Google Colab",
       "RAG Pipelines"
@@ -97,7 +92,7 @@
       "role": "Web Developer",
       "company": "Personal portfolio project",
       "year": "February 2026 - May 2026",
-      "details": "Built a bilingual responsive portfolio in HTML, CSS and JavaScript, with an integrated personal AI assistant powered by a Cloudflare Worker backend and OpenRouter API integration."
+      "details": "Built a bilingual responsive portfolio in HTML, CSS and JavaScript, with an integrated personal AI assistant."
     },
     {
       "role": "IT Support Technician",
@@ -108,19 +103,16 @@
   ],
   "projects": [
     {
-      "name": "Portfolio Website & AI Assistant",
-      "shortDescription": "A modern responsive portfolio website with a real AI assistant backend powered by Cloudflare.",
-      "description": "A bilingual personal portfolio website created to present my profile, skills and projects in a modern, recruiter-friendly way, while also integrating a real AI assistant backed by a Cloudflare Worker and OpenRouter API. The assistant answers visitors' questions about my profile, experience and projects using structured JSON data, giving the portfolio a practical interactive layer beyond a static presentation.",
+      "name": "Portfolio Website",
+      "shortDescription": "A modern responsive portfolio website built with HTML, CSS and JavaScript.",
+      "description": "A bilingual personal portfolio website created to present my profile, skills and projects in a modern and recruiter-friendly way. It includes a real AI assistant integrated in the backend, capable of answering questions about my profile, my skills, my projects and my apprenticeship search through a smooth and professional interface.",
       "technologies": [
         "HTML",
         "CSS",
         "JavaScript",
         "JSON",
         "Cloudflare Workers",
-        "Wrangler",
-        "OpenRouter API",
-        "REST API",
-        "Responsive Design"
+        "AI API"
       ]
     },
     {
@@ -148,7 +140,7 @@
       ]
     },
     {
-      "name": "RheinDevSys - Client Website",
+      "name": "Client Website via Fiverr",
       "shortDescription": "A professional web solution built for a development services client.",
       "description": "A freelance web development project completed for RheinDevSys, a company providing development services. The website showcases their services and provides a clean experience for potential clients.",
       "technologies": [
@@ -156,6 +148,17 @@
         "CSS",
         "JavaScript",
         "Responsive Design"
+      ]
+    },
+    {
+      "name": "AI-powered SEO/GEO automation dashboard",
+      "shortDescription": "Coming soon — AI-powered SEO/GEO automation dashboard.",
+      "description": "Coming soon: an AI-powered SEO/GEO automation dashboard currently in development and planned for a future release.",
+      "technologies": [
+        "AI",
+        "SEO",
+        "GEO",
+        "Automation"
       ]
     }
   ],
@@ -172,12 +175,12 @@
     "Gym",
     "Science",
     "New technologies",
-    "Cybersecurity",
+    "Electric guitar",
     "Travel",
     "Cinema"
   ],
   "ui": {
-    "siteTitle": "Iakobi Iakobashvili | Junior Developer",
+    "siteTitle": "Iakobi Iakobashvili - Junior Developer",
     "logo": "My Portfolio",
     "nav": {
       "home": "Home",
@@ -205,7 +208,15 @@
     "skills": {
       "eyebrow": "Skills",
       "title": "Tech stack & tools",
-      "subtitle": "Technologies I use and explore"
+      "subtitle": "Technologies I use and explore",
+      "groups": {
+        "frontend": "Frontend & Web",
+        "backend": "Backend & APIs",
+        "ai": "AI & Data",
+        "devops": "DevOps & Cloud",
+        "systems": "Systems & Engineering",
+        "mindset": "Mindset & Growth"
+      }
     },
     "projects": {
       "eyebrow": "Projects",
@@ -220,18 +231,55 @@
     "contact": {
       "eyebrow": "Contact",
       "title": "Let’s connect",
-      "subtitle": "Quick ways to reach me",
-      "linkedin": "My LinkedIn"
+      "subtitle": "Quick ways to reach me - or use the contact form on the dedicated page.",
+      "linkedin": "My LinkedIn",
+      "formCta": "Open the contact form"
+    },
+    "contactForm": {
+      "filename": "new_message.js",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "role": "Role / Company (optional)",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "city": "City (optional)",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send message",
+      "sending": "Sending…",
+      "success": "Thanks! Your message has been sent - I'll get back to you soon.",
+      "error": "Please fill in every required field before sending.",
+      "errorInvalidEmail": "Please enter a valid email address.",
+      "fallback": "Couldn't reach the server, so I opened your email app instead with your message pre-filled."
+    },
+    "contactPage": {
+      "eyebrow": "Contact",
+      "title": "Let's build something",
+      "subtitle": "Have a project, an opportunity, or just want to say hi? Fill in the form below or reach out directly via email or LinkedIn.",
+      "cardTitle": "contact_card.json",
+      "responseTimeLabel": "Response time",
+      "responseTimeValue": "Usually within 24h",
+      "preferredLabel": "Preferred contact",
+      "preferredValue": "Email or the website form",
+      "backHome": "Back to home"
+    },
+    "thankYouPage": {
+      "eyebrow": "Message sent",
+      "title": "Thanks - got it!",
+      "subtitle": "Your message has been received. I'll get back to you as soon as possible, usually within 24 hours.",
+      "backHome": "Back to home",
+      "backContact": "Send another message"
     },
     "chatbot": {
       "title": "Portfolio Assistant",
       "welcome": "Hi! I can help you quickly learn more about Iakobi. Ask me anything about his profile, projects, skills, or apprenticeship search.",
-      "try": "Important notice:",
+      "toastLabel": "AI Assistant",
+      "toastMessage": "Hey! There’s an AI assistant on this portfolio. You can ask anything about Iakobi.",
+      "try": "Try one of these questions:",
       "q1": "What skills does he have?",
       "q2": "Is he looking for an apprenticeship?",
       "q3": "What projects did he build?",
       "q4": "How can I contact him?",
-      "q5": "⚠️ Please note that the first response may take up to a minute to generate. Subsequent responses will be much faster. This issue will be fixed very soon. Thank you for your patience.",
       "placeholder": "Ask a question...",
       "loading": "My profile data is still loading. Please try again in a second.",
       "fallback": "I do not have that exact information yet. Try asking about skills, education, projects, experience, apprenticeship, contact, GitHub, LinkedIn, or location."
@@ -240,15 +288,15 @@
   "projectPages": [
     {
       "eyebrow": "Project 01",
-      "title": "Portfolio Website & AI Assistant",
-      "subtitle": "My personal portfolio project with a Cloudflare-powered AI backend",
+      "title": "Portfolio Website",
+      "subtitle": "My personal portfolio project",
       "descriptionTitle": "Description",
-      "description": "This project is my personal portfolio website. I built it to present my profile, my skills, my projects and my apprenticeship search in a clean and modern way, while also integrating a real AI assistant backend on Cloudflare Workers. Visitors can ask questions about my background and the assistant responds using structured JSON portfolio data through an OpenRouter-powered API flow.",
+      "description": "This project is my personal portfolio website. I built it to present my profile, my skills, my projects and my apprenticeship search in a clean and modern way. The site also includes a real AI assistant integrated in the backend, functioning as a genuine conversational assistant that can answer questions about me and my journey through a smooth and interactive experience.",
       "technologiesTitle": "Technologies",
-      "technologies": "HTML, CSS, JavaScript, JSON, Cloudflare Workers, Wrangler, OpenRouter API, REST API",
+      "technologies": "HTML, CSS, JavaScript, JSON, Cloudflare Workers, AI API",
       "learnedTitle": "What I learned",
-      "learned": "Responsive front-end design, structured content modeling, AI assistant backend integration, serverless deployment on Cloudflare, and practical API orchestration for a usable portfolio experience.",
-      "imageAlt": "Portfolio Website & AI Assistant"
+      "learned": "Responsive design, reusable sections, project presentation, JavaScript interactions, backend AI assistant integration, and lightweight web architecture.",
+      "imageAlt": "Portfolio Website"
     },
     {
       "eyebrow": "Project 02",
@@ -279,7 +327,7 @@
       "title": "RheinDevSys - Client Website",
       "subtitle": "A professional web solution for a development services client",
       "descriptionTitle": "Description",
-      "description": "This is a freelance project completed for a client through Fiverr. I developed a professional, modern website for RheinDevSys, a company providing development and technical services. The website showcases their services, portfolio, and provides a platform for client inquiries and engagement.",
+      "description": "This is a freelance project completed for a client through Fiverr. I developed a professional, modern website for DEVTECHSYS GmbH, a company providing development and technical services. The website showcases their services, portfolio, and provides a platform for client inquiries and engagement.",
       "technologiesTitle": "Technologies",
       "technologies": "HTML, CSS, JavaScript, Responsive Design",
       "learnedTitle": "What I learned",
