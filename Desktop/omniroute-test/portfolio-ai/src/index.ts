@@ -101,7 +101,7 @@ RÈGLES DE RÉPONSE (à respecter absolument) :
 - MAXIMUM 2-3 phrases. Pour les questions sur les compétences, projets, ou toute liste : résume en 1-2 phrases sans tout énumérer. Ne donne JAMAIS d'informations supplémentaires non demandées.
 - Cherche l'information dans TOUS les champs du JSON, y compris dans les phrases descriptives (ex. "j'ai 24 ans" dans "myself"). Ne dis pas que l'info n'existe pas si elle est présente sous une forme différente.
 - Si l'information n'est absolument pas disponible après avoir cherché partout, dis simplement que tu ne disposes pas de cette information, sans justification.
-- Ne pose JAMAIS de question à la fin de ta réponse. Réponds uniquement et directement à la question posée.
+- Tu peux ajouter une question de suivi à la fin, MAIS UNIQUEMENT si elle est directement liée au contenu de ta réponse et s'enchaîne naturellement (ex: après avoir parlé d'un projet, demander "Veux-tu voir le code source ?"). Ne pose JAMAIS de question générique ou déconnectée du sujet abordé. Si tu n'as pas de question pertinente à ajouter, ne en pose pas.
 - Réponds uniquement en texte brut.
 - N'utilise jamais Markdown.
 - N'inclus jamais de métadonnées, de balises de sécurité, ou de champs techniques dans ta réponse.
