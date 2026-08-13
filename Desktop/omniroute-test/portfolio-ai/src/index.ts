@@ -168,38 +168,29 @@ ${JSON.stringify(portfolioData)}
         // ── Helper: wait with exponential backoff ──────────────────────
         const wait = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
 
-        // ── Provider 1: Groq (multiple models, fail fast on 429) ────────
+        // ── Helper: check if a response is actually a rate-limit warning ──
+        const isGroqRateLimitResponse = (text: string): boolean => {
+            if (!text) return false;
+            const lower = text.toLowerCase();
+            return /rate.limit|submitted\s+over|too.many.requests|request.limit|quota.exceeded|usage.limit|try.again.later/i.test(lower);
+        };
+
+        // ── Provider 1: Groq (best model only — all share the same rate limit key) ──
         if (env.GROQ_API_KEY) {
-            const groqModels = [
-                "llama-3.3-70b-versatile",
-                "llama-3.1-8b-instant",
-                "qwen/qwen3.6-27b",
-                "openai/gpt-oss-20b"
-            ];
-            for (const model of groqModels) {
-                const { content: groqContent, status: groqStatus } = await callGroq(model);
-                providerStatuses[`Groq/${model}`] = groqStatus;
-                if (groqContent) {
-                    content = groqContent;
-                    console.log(`Groq (${model}) succeeded for query:`, userMessage.slice(0, 30));
-                    break;
+            const groqModel = "llama-3.3-70b-versatile";
+            const { content: groqContent, status: groqStatus } = await callGroq(groqModel);
+            providerStatuses[`Groq/${groqModel}`] = groqStatus;
+            if (groqContent && !isGroqRateLimitResponse(groqContent)) {
+                content = groqContent;
+                console.log(`Groq (${groqModel}) succeeded for query:`, userMessage.slice(0, 30));
+            } else {
+                const isRateLimited = groqStatus === 429 || isGroqRateLimitResponse(groqContent || "");
+                if (isRateLimited) {
+                    console.warn(`Groq rate-limited (status=${groqStatus}), falling back...`);
+                    allErrors.push(`Groq ${groqStatus} (rate-limited)`);
+                } else {
+                    allErrors.push(`Groq ${groqStatus}`);
                 }
-                if (groqStatus === 429) {
-                    // Only one quick retry before moving to next model/provider
-                    console.warn(`Groq/${model} rate-limited (429), 1 quick retry...`);
-                    await wait(800);
-                    const { content: retryContent, status: retryStatus } = await callGroq(model);
-                    providerStatuses[`Groq/${model}(r1)`] = retryStatus;
-                    if (retryContent) {
-                        content = retryContent;
-                        console.log(`Groq (${model}) retry succeeded for query:`, userMessage.slice(0, 30));
-                        break;
-                    }
-                    allErrors.push(`Groq/${model} 429`);
-                    // Stop retrying this model entirely — move to next
-                    continue;
-                }
-                allErrors.push(`Groq/${model} ${groqStatus}`);
             }
         }
 
@@ -233,9 +224,10 @@ ${JSON.stringify(portfolioData)}
                 console.log("Gemini fallback succeeded for query:", userMessage.slice(0, 30));
             } else {
                 if (geminiRes.status === 429) {
-                    console.warn("Gemini rate-limited (429)");
+                    console.warn("Gemini rate-limited (429):", geminiText.slice(0, 200));
                     allErrors.push("Gemini 429 rate-limited");
                 } else {
+                    console.warn("Gemini failed:", geminiText.slice(0, 200));
                     allErrors.push(`Gemini ${geminiRes.status}: ${geminiText.slice(0, 100)}`);
                 }
             }
@@ -268,9 +260,10 @@ ${JSON.stringify(portfolioData)}
                 console.log("OpenRouter fallback succeeded for query:", userMessage.slice(0, 30));
             } else {
                 if (orRes.status === 429) {
-                    console.warn("OpenRouter rate-limited (429)");
+                    console.warn("OpenRouter rate-limited (429):", orText.slice(0, 200));
                     allErrors.push("OpenRouter 429 rate-limited");
                 } else {
+                    console.warn("OpenRouter failed:", orText.slice(0, 200));
                     allErrors.push(`OpenRouter ${orRes.status}: ${orText.slice(0, 100)}`);
                 }
             }
@@ -363,6 +356,12 @@ ${JSON.stringify(portfolioData)}
                 if (lt.startsWith("<think") || lt.startsWith("</think>") || lt.startsWith("<thinking") || lt.startsWith("```") || lt.startsWith("<?xml") || lt.startsWith("<!--")) return true;
                 // Contains thinking keywords
                 if (["Constraint Check","Check Constraints","Draft Response","Self-Correction","Final Output Generation","Language:","Context:","The user is","Let me","I need to","I've checked","Actually","Analyzing","Reviewing","Checking","User Input:","user input:","Looking at the user","Analyzing user","Evaluating","Validating","User says","user says","3rd person","1st person","Intent:","intent:","Must respond","Should respond","Need to respond","Key rule check","Key rule","Rule check","Rule Check","-> Checked","-> Verified","-> Confirmed"].some(kw => t.includes(kw))) return true;
+                // Post-answer thinking: "Output:", "Proceed.", "Third person:", "No markdown:", etc.
+                if (/^(Output|Proceeds?|Example|Draft|Note|Wait|Actually|Hmm|Hmm\.|Okay|Ok|Alright|Right|Sure|Got it|Yes\.|No\.|Check|Verification|Validation|Review|Summary|Conclusion|Final answer|Final output|Final:|Output:|Result:|Answer:)/i.test(t)) return true;
+                // Lines like "Third person: Checked." / "No markdown: Checked." / "Matches perfectly."
+                if (/^(Third person|No markdown|Concise|Direct|French|English|Output matches|Matches perfectly|All good|One minor|Minor|Proceeds\.)/i.test(t)) return true;
+                // Lines that look like a quoted example then commentary
+                if (/^"[\s\S]*?"\s*->/i.test(t)) return true;
                 return false;
             };
             const answerPatterns = [
@@ -414,19 +413,18 @@ ${JSON.stringify(portfolioData)}
 
         // ── All providers failed ───────────────────────────────────────
         if (!content) {
-            const rateLimited = allErrors.some(e => e.includes("429"));
-            const groqFailed = Object.keys(providerStatuses).filter(k => k.startsWith("Groq")).length > 0;
-            const allFailed = groqFailed && Object.keys(providerStatuses).length >= 3;
+            const rateLimitErrors = allErrors.filter(e => e.includes("429"));
+            const totalProviders = Object.keys(providerStatuses).filter(k => !k.includes("(r")).length;
+            const groqCount = Object.keys(providerStatuses).filter(k => k.startsWith("Groq") && !k.includes("(r")).length;
 
-            if (rateLimited && allFailed) {
-                // All providers hit rate limits — suggest waiting
-                console.error("All providers rate-limited. Errors:", allErrors.join(" | "));
+            if (rateLimitErrors.length > 0) {
+                // Providers hit rate limits / quota exhausted
+                console.error("Rate-limited/quota exhausted. Errors:", allErrors.join(" | "));
                 return Response.json(
                     {
                         answer: language === "fr"
-                            ? "Les serveurs sont temporairement saturés. Veuillez réessayer dans quelques secondes."
-                            : "The AI servers are temporarily overwhelmed. Please retry in a few seconds.",
-                        // rate limit info logged, not returned
+                            ? "L'assistant est actuellement indisponible car les quota API sont épuisés. Veuillez réessayer plus tard ou contacter le développeur pour recharger les crédits."
+                            : "The AI assistant is currently unavailable because API quotas have been exhausted. Please try again later or contact the developer to recharge the credits.",
                     },
                     { status: 200, headers: corsHeaders() }
                 );
