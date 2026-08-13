@@ -168,7 +168,7 @@ ${JSON.stringify(portfolioData)}
         // ── Helper: wait with exponential backoff ──────────────────────
         const wait = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
 
-        // ── Provider 1: Groq (multiple models, retry on 429) ──────────
+        // ── Provider 1: Groq (multiple models, fail fast on 429) ────────
         if (env.GROQ_API_KEY) {
             const groqModels = [
                 "llama-3.3-70b-versatile",
@@ -184,32 +184,22 @@ ${JSON.stringify(portfolioData)}
                     console.log(`Groq (${model}) succeeded for query:`, userMessage.slice(0, 30));
                     break;
                 }
-                // Retry up to 2 times with backoff on 429
                 if (groqStatus === 429) {
-                    for (let retry = 1; retry <= 2; retry++) {
-                        const delay = 1500 * retry;
-                        console.warn(`Groq/${model} rate-limited (429), retry ${retry}/2 in ${delay}ms...`);
-                        await wait(delay);
-                        const { content: retryContent, status: retryStatus } = await callGroq(model);
-                        providerStatuses[`Groq/${model}(r${retry})`] = retryStatus;
-                        if (retryContent) {
-                            content = retryContent;
-                            console.log(`Groq (${model}) retry ${retry} succeeded for query:`, userMessage.slice(0, 30));
-                            break;
-                        }
-                        if (retryStatus !== 429) {
-                            // Non-429 error on retry — stop retrying this model
-                            allErrors.push(`Groq/${model} ${retryStatus}`);
-                            break;
-                        }
+                    // Only one quick retry before moving to next model/provider
+                    console.warn(`Groq/${model} rate-limited (429), 1 quick retry...`);
+                    await wait(800);
+                    const { content: retryContent, status: retryStatus } = await callGroq(model);
+                    providerStatuses[`Groq/${model}(r1)`] = retryStatus;
+                    if (retryContent) {
+                        content = retryContent;
+                        console.log(`Groq (${model}) retry succeeded for query:`, userMessage.slice(0, 30));
+                        break;
                     }
-                    if (content) break;
-                    allErrors.push(`Groq/${model} 429 (exhausted retries)`);
-                } else {
-                    allErrors.push(`Groq/${model} ${groqStatus}`);
+                    allErrors.push(`Groq/${model} 429`);
+                    // Stop retrying this model entirely — move to next
+                    continue;
                 }
-                // Small delay between models to avoid hammering
-                if (!content) await wait(500);
+                allErrors.push(`Groq/${model} ${groqStatus}`);
             }
         }
 
