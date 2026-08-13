@@ -61,8 +61,9 @@ let chatbotHideTimer = null;
 let chatbotGlowTimer = null;
 let terminalTimer = null;
 let terminalRunId = 0;
-let lastRateLimitTime = 0; // track last rate-limit to prevent spamming
-const RATE_LIMIT_COOLDOWN_MS = 30000; // 30s cooldown after rate limit
+// Per-question cooldown map: question → timestamp of last rate-limit hit
+const rateLimitCooldowns = new Map(); // question text → Date.now()
+const RATE_LIMIT_COOLDOWN_MS = 30000; // 30s cooldown per question
 
 // ── Local question cache (survives page reload, keys by question text) ──
 const CACHE_STORAGE_KEY = "chatbot_qa_cache_v2";
@@ -967,7 +968,7 @@ function sendChatbotQuestion(question) {
     const cleanedQuestion = question.trim();
     if (cleanedQuestion === "") return;
 
-    // ── Check local cache first (serves instantly, no API call) ──
+    // ── Check local cache first (serves instantly, no API call, no cooldown) ──
     const cached = getFromCache(cleanedQuestion);
     if (cached) {
         addMessage(cleanedQuestion, "user");
@@ -978,10 +979,10 @@ function sendChatbotQuestion(question) {
         return;
     }
 
-    // Check rate limit cooldown
-    const now = Date.now();
-    if (now - lastRateLimitTime < RATE_LIMIT_COOLDOWN_MS) {
-        const remaining = Math.ceil((RATE_LIMIT_COOLDOWN_MS - (now - lastRateLimitTime)) / 1000);
+    // ── Per-question rate limit cooldown (only blocks retries of the SAME question) ──
+    const lastHit = rateLimitCooldowns.get(cleanedQuestion);
+    if (lastHit) {
+        const remaining = Math.ceil((RATE_LIMIT_COOLDOWN_MS - (Date.now() - lastHit)) / 1000);
         addMessage(cleanedQuestion, "user");
         addMessage(currentLanguage === "fr"
             ? `Attendez encore ${remaining}s… les serveurs AI sont temporairement saturés.`
@@ -1003,7 +1004,7 @@ function sendChatbotQuestion(question) {
                               answer.toLowerCase().includes("overwhelmed") ||
                               answer.toLowerCase().includes("saturés");
         if (isRateLimited) {
-            lastRateLimitTime = Date.now();
+            rateLimitCooldowns.set(cleanedQuestion, Date.now());
         } else {
             // Cache the successful answer
             setCache(cleanedQuestion, answer);
