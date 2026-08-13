@@ -908,14 +908,40 @@ function getBotReply(question) {
     return ui?.chatbot?.fallback || "I do not have that exact information yet.";
 }
 
+function showTypingIndicator() {
+    if (!chatbotBody) return;
+    // Remove any existing typing indicator
+    const existing = chatbotBody.querySelector(".typing-indicator");
+    if (existing) existing.remove();
+
+    const el = document.createElement("div");
+    el.className = "typing-indicator";
+    el.innerHTML = `
+        <div class="typing-dots">
+            <span></span><span></span><span></span>
+        </div>
+        <span class="typing-label">${currentLanguage === "fr" ? "Analyse" : "Thinking"}</span>
+    `;
+    chatbotBody.appendChild(el);
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+}
+
+function hideTypingIndicator() {
+    if (!chatbotBody) return;
+    const el = chatbotBody.querySelector(".typing-indicator");
+    if (el) el.remove();
+}
+
 function sendChatbotQuestion(question) {
     const cleanedQuestion = question.trim();
     if (cleanedQuestion === "") return;
 
     addMessage(cleanedQuestion, "user");
+    showTypingIndicator();
 
     setTimeout(async () => {
         const answer = await getAIReply(cleanedQuestion);
+        hideTypingIndicator();
         addMessage(answer, "bot");
         conversationHistory.push({ q: cleanedQuestion, a: answer });
         if (conversationHistory.length > 2) conversationHistory.shift();
