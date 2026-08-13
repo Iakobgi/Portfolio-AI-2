@@ -295,6 +295,10 @@ RÈGLES DE RÉPONSE (à respecter absolument) :
                 .replace(new RegExp("<\\?xml[\\s\\S]*?\\?>", "gi"), "")
                 .replace(new RegExp("<\\!--[\\s\\S]*?-->", "gi"), "")
                 .replace(new RegExp("</think>", "gi"), "")
+                // Strip raw JSON key dumps (model degradation pattern)
+                .replace(/`[^`]+`:\s*"[^"]*"/g, "")
+                // Strip meta-commentary about own rules/instructions mid-response
+                .replace(/\s*\{[^\}]{0,200}?(?:rule|instruction|prompt|follow-up|relevant|skipped|changed)[^\}]{0,200}?\}\s*/gi, "")
                 .replace(/\n\n{3,}/g, "\n\n")
                 .trim();
         }
