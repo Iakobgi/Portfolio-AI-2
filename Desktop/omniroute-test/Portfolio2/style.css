@@ -1614,6 +1614,7 @@ main .contact-page .contact-link:hover i {
   align-items: center;
   gap: 8px;
   width: fit-content;
+  white-space: nowrap;
   text-align: left;
   background: transparent;
   border: none;
