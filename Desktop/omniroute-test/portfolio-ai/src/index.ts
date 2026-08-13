@@ -39,6 +39,7 @@ export default {
 
         const userMessage = data.message || "";
         const language = data.language || "fr";
+        const history: Array<{ role: string; content: string }> = Array.isArray(data.history) ? data.history : [];
 
 
         const portfolioData =
@@ -147,6 +148,7 @@ ${JSON.stringify(portfolioData)}
                     max_tokens: 600,
                     messages: [
                         { role: "system", content: getSystemPrompt(model) },
+                        ...history,
                         { role: "user", content: userMessage }
                     ]
                 })
@@ -226,6 +228,7 @@ ${JSON.stringify(portfolioData)}
                         max_tokens: 600,
                         messages: [
                             { role: "system", content: getSystemPrompt("gemini-3.6-flash") },
+                            ...history,
                             { role: "user", content: userMessage }
                         ]
                     })
@@ -261,6 +264,7 @@ ${JSON.stringify(portfolioData)}
                     max_tokens: 600,
                     messages: [
                         { role: "system", content: getSystemPrompt("openrouter/free") },
+                        ...history,
                         { role: "user", content: userMessage }
                     ]
                 })
