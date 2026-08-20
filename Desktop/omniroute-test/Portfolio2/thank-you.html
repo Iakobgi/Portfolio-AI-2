@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Merci - Portfolio</title>
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+    <script>
+        (function () {
+            var saved = localStorage.getItem("theme");
+            if (saved === "light") {
+                document.documentElement.setAttribute("data-theme", "light");
+            }
+        })();
+    </script>
+
+    <div class="background-blur-wrap">
+        <div class="background-blur blur-left"></div>
+        <div class="background-blur blur-right"></div>
+    </div>
+
+    <header class="header" id="header">
+        <div class="container nav">
+            <a href="index.html" class="logo" data-i18n="ui.logo">Mon Portfolio</a>
+
+            <nav class="navbar" id="navbar">
+                <a href="index.html#home" data-i18n="ui.nav.home">Accueil</a>
+                <a href="index.html#about" data-i18n="ui.nav.about">À propos</a>
+                <a href="index.html#skills" data-i18n="ui.nav.skills">Compétences</a>
+                <a href="index.html#projects" data-i18n="ui.nav.projects">Projets</a>
+                <a href="contact.html" data-i18n="ui.nav.contact">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light and dark theme">
+                    <i class="fa-solid fa-sun theme-icon-light"></i>
+                    <i class="fa-solid fa-moon theme-icon-dark"></i>
+                </button>
+
+                <div class="language-switcher">
+                    <img src="fr-flag.png"
+                        alt="Français"
+                        onclick="changeLanguage('fr')">
+
+                    <img src="uk-flag.png"
+                        alt="English"
+                        onclick="changeLanguage('en')">
+                </div>
+
+                <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section thank-you-section">
+            <div class="container">
+                <div class="thank-you-card reveal">
+                    <div class="card-chrome">
+                        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                        <span class="card-filename">message_sent.log</span>
+                    </div>
+                    <div class="thank-you-body">
+                        <div class="thank-you-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <span class="eyebrow" data-i18n="ui.thankYouPage.eyebrow">Message envoyé</span>
+                        <h2 data-i18n="ui.thankYouPage.title">Merci, c'est bien reçu !</h2>
+                        <p data-i18n="ui.thankYouPage.subtitle">Votre message a bien été envoyé. Je vous répondrai dès que possible, généralement sous 24h.</p>
+
+                        <div class="thank-you-actions">
+                            <a href="index.html" class="btn btn-primary">
+                                <i class="fa-solid fa-house"></i>
+                                <span data-i18n="ui.thankYouPage.backHome">Retour à l'accueil</span>
+                            </a>
+                            <a href="contact.html" class="btn btn-secondary">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span data-i18n="ui.thankYouPage.backContact">Envoyer un autre message</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a id="footer-email" href="mailto:test@email.com" aria-label="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a id="footer-linkedin" href="#" target="_blank" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a id="footer-github" href="#" target="_blank" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+
+            <p id="footer-text">© 2026 Portfolio</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

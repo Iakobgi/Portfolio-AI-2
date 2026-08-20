@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script>
+        (function () {
+            var saved = localStorage.getItem("theme");
+            if (saved === "light") {
+                document.documentElement.setAttribute("data-theme", "light");
+            }
+        })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Iakobi Iakobashvili</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta
+        name="description"
+        content="Portfolio de Iakobi Iakobashvili, développeur junior à la recherche d'une alternance de 12 mois en développement web, DevOps et intelligence artificielle."
+    />
+
+    <!-- Open Graph / social share preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Iakobi Iakobashvili - Développeur Full-Stack, IA & DevOps" />
+    <meta property="og:description" content="Développeur junior à la recherche d'une alternance de 12 mois en développement web, DevOps et intelligence artificielle." />
+    <meta property="og:image" content="https://iakob.netlify.app/profile.png" />
+    <meta property="og:url" content="https://iakob.netlify.app/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Iakobi Iakobashvili - Développeur Full-Stack, IA & DevOps" />
+    <meta name="twitter:description" content="Développeur junior à la recherche d'une alternance de 12 mois en développement web, DevOps et intelligence artificielle." />
+    <meta name="twitter:image" content="https://iakob.netlify.app/profile.png" />
+
+    <link rel="preload" as="image" href="profile.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+</head>
+<body>
+    <div class="background-blur-wrap">
+        <div class="background-blur blur-left"></div>
+        <div class="background-blur blur-right"></div>
+    </div>
+
+    <header class="header" id="header">
+        <div class="container nav">
+            <a href="#home" class="logo" data-i18n="ui.logo">Mon Portfolio</a>
+
+            <nav class="navbar" id="navbar">
+                <a href="#home" data-i18n="ui.nav.home">Accueil</a>
+                <a href="#about" data-i18n="ui.nav.about">À propos</a>
+                <a href="#skills" data-i18n="ui.nav.skills">Compétences</a>
+                <a href="#projects" data-i18n="ui.nav.projects">Projets</a>
+                <a href="#contact" data-i18n="ui.nav.contact">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle light and dark theme">
+                    <i class="fa-solid fa-sun theme-icon-light"></i>
+                    <i class="fa-solid fa-moon theme-icon-dark"></i>
+                </button>
+
+                <div class="language-switcher">
+                    <img src="fr-flag.png"
+                        alt="Français"
+                        onclick="changeLanguage('fr')">
+
+                    <img src="uk-flag.png"
+                        alt="English"
+                        onclick="changeLanguage('en')">
+                </div>
+
+                <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero section" id="home">
+            <div class="container hero-content">
+                <div class="hero-text reveal">
+                    <div class="hero-badge" data-i18n="ui.heroBadge">Disponible pour une alternance</div>
+                    <h1 id="hero-name">Iakobi Iakobashvili</h1>
+                    <h2 id="hero-title">Développeur Junior</h2>
+                    <p class="hero-description" id="hero-summary"></p>
+
+                    <div class="hero-buttons">
+                        <a href="cv.pdf" download class="btn btn-primary">
+                            <i class="fa-solid fa-download"></i>
+                            <span data-i18n="ui.buttons.downloadCV">Télécharger le CV</span>
+                        </a>
+                        <a href="#projects" class="btn btn-secondary" data-i18n="ui.buttons.exploreProjects">Voir les projets</a>
+                    </div>
+
+                    <div class="social-links">
+                        <a id="linkedin-link" href="#" target="_blank" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a id="github-link" href="#" target="_blank" aria-label="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+
+                    <div class="hero-terminal">
+                        <div class="terminal-bar">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="terminal-title">iakobi@portfolio:~</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="terminal-line"><span class="prompt">$</span> <span id="terminal-text"></span><span class="cursor">▍</span></p>
+                            <p class="terminal-line terminal-output" id="terminal-output"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-image reveal">
+                    <div class="browser-frame">
+                        <div class="browser-bar">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="browser-url">iakobi.dev/portfolio</span>
+                        </div>
+                        <div class="image-wrapper">
+                            <img src="profile.png" alt="Profile picture" fetchpriority="high" decoding="async" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about section" id="about">
+            <div class="container">
+                <div class="section-title reveal">
+                    <span class="eyebrow" data-i18n="ui.about.eyebrow">À propos</span>
+                    <h2 data-i18n="ui.about.title">Créer des expériences numériques propres</h2>
+                    <p data-i18n="ui.about.subtitle">Présentation rapide</p>
+                </div>
+
+                <div class="about-grid">
+                    <article class="about-card reveal">
+                        <h3 data-i18n="ui.about.who">Qui je suis</h3>
+                        <p id="about-myself"></p>
+                    </article>
+
+                    <article class="about-card reveal">
+                        <h3 data-i18n="ui.about.looking">Ce que je recherche</h3>
+                        <p id="about-goals"></p>
+                    </article>
+
+                    <article class="about-card reveal">
+                        <h3 data-i18n="ui.about.interests">Centres d’intérêt</h3>
+                        <p id="about-interests"></p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills section" id="skills">
+            <div class="container">
+                <div class="section-title reveal">
+                    <span class="eyebrow" data-i18n="ui.skills.eyebrow">Compétences</span>
+                    <h2 data-i18n="ui.skills.title">Technologies & outils</h2>
+                    <p data-i18n="ui.skills.subtitle">Technologies que j’utilise et que j’explore</p>
+                </div>
+
+                <div class="skills-list reveal" id="skills-list"></div>
+            </div>
+        </section>
+
+        <section class="projects section" id="projects">
+            <div class="container">
+                <div class="section-title reveal">
+                    <span class="eyebrow" data-i18n="ui.projects.eyebrow">Projets</span>
+                    <h2 data-i18n="ui.projects.title">Projets sélectionnés</h2>
+                    <p data-i18n="ui.projects.subtitle">Découvrez mes projets récents</p>
+                </div>
+
+                <div class="projects-wrapper reveal">
+                    <button class="projects-arrow left" id="projects-prev" aria-label="Previous project">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <div class="projects-track" id="projects-track"></div>
+
+                    <button class="projects-arrow right" id="projects-next" aria-label="Next project">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact section" id="contact">
+            <div class="container">
+                <div class="section-title reveal">
+                    <span class="eyebrow" data-i18n="ui.contact.eyebrow">Contact</span>
+                    <h2 data-i18n="ui.contact.title">Restons en contact</h2>
+                    <p data-i18n="ui.contact.subtitle">Moyens rapides pour me contacter</p>
+                </div>
+
+                <div class="contact-box reveal">
+                    <a id="contact-email" class="contact-link" href="mailto:test@email.com">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>...@email.com</span>
+                    </a>
+
+                    <a id="contact-linkedin" class="contact-link" href="#" target="_blank">
+                        <i class="fa-brands fa-linkedin"></i>
+                        <span data-i18n="ui.contact.linkedin">Mon LinkedIn</span>
+                    </a>
+
+                    <a
+                        id="contact-location"
+                        class="contact-link"
+                        href="https://www.google.com/maps/place/Fontaine-le-Comte,+France"
+                        target="_blank"
+                    >
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Fontaine-le-Comte</span>
+                    </a>
+                </div>
+
+                <a href="contact.html" class="btn btn-primary contact-form-cta reveal">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span data-i18n="ui.contact.formCta">Ouvrir le formulaire de contact</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a id="footer-email" href="mailto:test@email.com" aria-label="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a id="footer-linkedin" href="#" target="_blank" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a id="footer-github" href="#" target="_blank" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+
+            <p id="footer-text">© 2026 Portfolio</p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toast" id="chatbot-toast" role="status" aria-live="polite" aria-hidden="true">
+        <button class="chatbot-toast-close" id="chatbot-toast-close" aria-label="Close hint">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <span class="chatbot-toast-label" data-i18n="ui.chatbot.toastLabel">Assistant IA</span>
+        <p data-i18n="ui.chatbot.toastMessage">Bonjour ! Il y a un assistant IA sur ce portfolio. Posez-lui toutes vos questions sur Iakobi.</p>
+    </div>
+
+    <button class="chatbot-toggle" id="chatbot-toggle" aria-label="Open chatbot">
+        <i class="fa-solid fa-comments"></i>
+    </button>
+
+    <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+            <h3 data-i18n="ui.chatbot.title">Assistant Portfolio</h3>
+            <button class="chatbot-close" id="chatbot-close" aria-label="Close chatbot">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="bot-message chatbot-welcome">
+                <p data-i18n="ui.chatbot.welcome">Bonjour ! Je peux vous aider à en savoir plus rapidement sur Iakobi.</p>
+            </div>
+
+            <div class="bot-message chatbot-examples">
+                <p data-i18n="ui.chatbot.try">Essayez l’une de ces questions :</p>
+                <div class="chatbot-suggestion-list">
+                    <button type="button" class="chatbot-suggestion" data-i18n="ui.chatbot.q1"></button>
+                    <button type="button" class="chatbot-suggestion" data-i18n="ui.chatbot.q2"></button>
+                    <button type="button" class="chatbot-suggestion" data-i18n="ui.chatbot.q3"></button>
+                    <button type="button" class="chatbot-suggestion" data-i18n="ui.chatbot.q4"></button>
+                </div>
+            </div>
+        </div>
+
+        <form class="chatbot-input-area" id="chatbot-form">
+            <input
+                type="text"
+                id="chatbot-input"
+                placeholder="Posez une question..."
+                autocomplete="off"
+            />
+            <button type="submit" aria-label="Send message">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
