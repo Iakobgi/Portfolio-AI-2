@@ -135,9 +135,23 @@ ${JSON.stringify(portfolioData)}
         }
 
 
+        // ── Helper: fetch with a hard timeout via AbortController ───────
+        // If a provider hangs or is slow, we abort and move to the next one
+        // instead of burning the worker's wall-clock budget on a dead call.
+        const PROVIDER_TIMEOUT_MS = 9000;
+        async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs: number): Promise<Response> {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                return await fetch(url, { ...init, signal: controller.signal });
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
         // ── Helper: call Groq with a specific model ────────────────────
         async function callGroq(model: string): Promise<{ content: string | null; status: number }> {
-            const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            const res = await fetchWithTimeout("https://api.groq.com/openai/v1/chat/completions", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -152,7 +166,7 @@ ${JSON.stringify(portfolioData)}
                         { role: "user", content: userMessage }
                     ]
                 })
-            });
+            }, PROVIDER_TIMEOUT_MS);
             const text = await res.text();
             let parsed: any;
             try { parsed = JSON.parse(text); } catch { parsed = null; }
@@ -178,7 +192,17 @@ ${JSON.stringify(portfolioData)}
         // ── Provider 1: Groq (best model only — all share the same rate limit key) ──
         if (env.GROQ_API_KEY) {
             const groqModel = "llama-3.3-70b-versatile";
-            const { content: groqContent, status: groqStatus } = await callGroq(groqModel);
+            let groqContent: string | null = null;
+            let groqStatus = 598;
+            try {
+                const result = await callGroq(groqModel);
+                groqContent = result.content;
+                groqStatus = result.status;
+            } catch (err) {
+                const msg = err instanceof Error && err.name === "AbortError" ? "timeout (9s)" : String(err);
+                console.warn(`Groq call failed/aborted (${groqModel}):`, msg);
+                allErrors.push(`Groq network error (${msg})`);
+            }
             providerStatuses[`Groq/${groqModel}`] = groqStatus;
             if (groqContent && !isGroqRateLimitResponse(groqContent)) {
                 content = groqContent;
@@ -188,7 +212,7 @@ ${JSON.stringify(portfolioData)}
                 if (isRateLimited) {
                     console.warn(`Groq rate-limited (status=${groqStatus}), falling back...`);
                     allErrors.push(`Groq ${groqStatus} (rate-limited)`);
-                } else {
+                } else if (groqStatus !== 598) {
                     allErrors.push(`Groq ${groqStatus}`);
                 }
             }
@@ -196,25 +220,35 @@ ${JSON.stringify(portfolioData)}
 
         // ── Provider 2: Gemini fallback ────────────────────────────────
         if (!content && env.GEMINI_API_KEY) {
-            const geminiRes = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions?key=${env.GEMINI_API_KEY}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${env.GEMINI_API_KEY}`
+            let geminiRes: Response;
+            try {
+                geminiRes = await fetchWithTimeout(
+                    `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions?key=${env.GEMINI_API_KEY}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${env.GEMINI_API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            model: "gemini-2.0-flash",
+                            max_tokens: 600,
+                            messages: [
+                                { role: "system", content: getSystemPrompt("gemini-2.0-flash") },
+                                ...history,
+                                { role: "user", content: userMessage }
+                            ]
+                        })
                     },
-                    body: JSON.stringify({
-                        model: "gemini-3.6-flash",
-                        max_tokens: 600,
-                        messages: [
-                            { role: "system", content: getSystemPrompt("gemini-3.6-flash") },
-                            ...history,
-                            { role: "user", content: userMessage }
-                        ]
-                    })
-                }
-            );
+                    PROVIDER_TIMEOUT_MS
+                );
+            } catch (err) {
+                const msg = err instanceof Error && err.name === "AbortError" ? "timeout (9s)" : String(err);
+                console.warn("Gemini call failed/aborted:", msg);
+                allErrors.push(`Gemini network error (${msg})`);
+                providerStatuses[`Gemini`] = 0;
+                geminiRes = new Response('{"error":"aborted"}', { status: 0 });
+            }
             providerStatuses[`Gemini`] = geminiRes.status;
             const geminiText = await geminiRes.text();
             let geminiParsed: any;
@@ -226,6 +260,8 @@ ${JSON.stringify(portfolioData)}
                 if (geminiRes.status === 429) {
                     console.warn("Gemini rate-limited (429):", geminiText.slice(0, 200));
                     allErrors.push("Gemini 429 rate-limited");
+                } else if (geminiRes.status === 0) {
+                    // already logged above (timeout/network)
                 } else {
                     console.warn("Gemini failed:", geminiText.slice(0, 200));
                     allErrors.push(`Gemini ${geminiRes.status}: ${geminiText.slice(0, 100)}`);
@@ -235,22 +271,31 @@ ${JSON.stringify(portfolioData)}
 
         // ── Provider 3: OpenRouter fallback ────────────────────────────
         if (!content && env.OPENROUTER_API_KEY) {
-            const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${env.OPENROUTER_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: "openrouter/free",
-                    max_tokens: 600,
-                    messages: [
-                        { role: "system", content: getSystemPrompt("openrouter/free") },
-                        ...history,
-                        { role: "user", content: userMessage }
-                    ]
-                })
-            });
+            let orRes: Response;
+            try {
+                orRes = await fetchWithTimeout("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${env.OPENROUTER_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: "nvidia/nemotron-3.5-lightning:free",
+                        max_tokens: 600,
+                        messages: [
+                            { role: "system", content: getSystemPrompt("openrouter/free") },
+                            ...history,
+                            { role: "user", content: userMessage }
+                        ]
+                    })
+                }, PROVIDER_TIMEOUT_MS);
+            } catch (err) {
+                const msg = err instanceof Error && err.name === "AbortError" ? "timeout (9s)" : String(err);
+                console.warn("OpenRouter call failed/aborted:", msg);
+                allErrors.push(`OpenRouter network error (${msg})`);
+                providerStatuses[`OpenRouter`] = 0;
+                orRes = new Response('{"error":"aborted"}', { status: 0 });
+            }
             providerStatuses[`OpenRouter`] = orRes.status;
             const orText = await orRes.text();
             let orParsed: any;
@@ -262,6 +307,8 @@ ${JSON.stringify(portfolioData)}
                 if (orRes.status === 429) {
                     console.warn("OpenRouter rate-limited (429):", orText.slice(0, 200));
                     allErrors.push("OpenRouter 429 rate-limited");
+                } else if (orRes.status === 0) {
+                    // already logged above (timeout/network)
                 } else {
                     console.warn("OpenRouter failed:", orText.slice(0, 200));
                     allErrors.push(`OpenRouter ${orRes.status}: ${orText.slice(0, 100)}`);
